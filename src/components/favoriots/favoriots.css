@@ -6,6 +6,13 @@
   justify-content: center;
 }
 
+.empty_message {
+  font-size: 24px;
+  font-weight: 500;
+  font-variant: small-caps;
+  padding-top: 24px;
+}
+
 .card {
   width: 80%;
   margin-inline: auto;

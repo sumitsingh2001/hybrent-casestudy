@@ -28,23 +28,29 @@ const Favoriots = () => {
 
   return (
     <div className='fav_container'>
-      {beers.map((el: any, idx: number) => {
-        const { id, name, image_url, description } = el;
-        return (
-          <div className='card' key={idx}>
-            <div className='remove' onClick={() => removeFromFavs(id)}>
-              <AiTwotoneStar />
+      {beers.length === 0 ? (
+        <div className='empty_message'>
+          No favorite beers yet! Go and add some..
+        </div>
+      ) : (
+        beers.map((el: any, idx: number) => {
+          const { id, name, image_url, description } = el;
+          return (
+            <div className='card' key={idx}>
+              <div className='remove' onClick={() => removeFromFavs(id)}>
+                <AiTwotoneStar />
+              </div>
+              <div className='img'>
+                <img src={image_url} alt='' />
+              </div>
+              <div className='title'>
+                <div className='name'>{name}</div>
+                <div className='desc'>{description}</div>
+              </div>
             </div>
-            <div className='img'>
-              <img src={image_url} alt='' />
-            </div>
-            <div className='title'>
-              <div className='name'>{name}</div>
-              <div className='desc'>{description}</div>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </div>
   );
 };
