@@ -1,0 +1,34 @@
+.header {
+  width: 100%;
+  height: auto;
+  margin-bottom: 18px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 48px;
+  background-color: orange;
+}
+
+.nav .logo {
+  font-size: 24px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #000;
+}
+
+.nav .links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav .links .link {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #000;
+}
