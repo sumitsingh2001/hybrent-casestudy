@@ -13,6 +13,14 @@
   padding-top: 24px;
 }
 
+@media (max-width: 767px) {
+  .empty_message {
+    font-size: 18px;
+    padding: 0 4px;
+    text-align: center;
+  }
+}
+
 .card {
   width: 80%;
   margin-inline: auto;
@@ -22,6 +30,12 @@
   border: 1px solid #c2c2c2;
   border-radius: 4px;
   margin-bottom: 16px;
+}
+
+@media (max-width: 767px) {
+  .card {
+    flex-direction: column;
+  }
 }
 
 .remove {
@@ -58,4 +72,14 @@
   font-size: 18px;
   font-weight: 500;
   max-width: 80%;
+}
+
+@media (max-width: 767px) {
+  .card .img {
+    width: 100%;
+  }
+
+  .card .title {
+    padding: 0 12px;
+  }
 }

@@ -6,6 +6,12 @@
   padding-bottom: 56px;
 }
 
+@media (max-width: 475px) {
+  .home_container {
+    padding: 0 14px;
+  }
+}
+
 .search_bar {
   width: 100%;
   display: flex;
