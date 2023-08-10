@@ -11,8 +11,10 @@ const Favoriots = () => {
       localStorage.getItem('favoriteBeers') || '[]'
     );
 
-    const extractedBeers = savedBeers.map((item: any) => item.beer);
-    setBeers(extractedBeers);
+    setBeers(savedBeers);
+
+    // const extractedBeers = savedBeers.map((item: any) => item.beer);
+    // setBeers(extractedBeers);
   }, []);
 
   // REMOVE THE PERTICULAR ID FROM THE LIST------------

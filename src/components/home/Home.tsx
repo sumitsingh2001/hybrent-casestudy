@@ -6,11 +6,16 @@ import axios from 'axios';
 import Loader from '../Loader';
 
 const Home = () => {
-  const [icon, setIcon] = useState<boolean | any>(-1);
+  const [favoriteStatus, setFavoriteStatus] = useState<number[]>([]);
   const [value, setValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [beers, setBeers] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  // FOR ALL THE STAR ICON INDIVIDUALLY
+  useEffect(() => {
+    setFavoriteStatus(Array(beers.length).fill(false));
+  }, [beers]);
 
   // GETTING THE BEERS HERE
   useEffect(() => {
@@ -52,22 +57,44 @@ const Home = () => {
     paginationArray.push(i);
   }
 
-  // HERE IS THE FUNCTION TO ADD THE BEERS IN FAVORIET SECTION, IF API METHODS WILL BE AVAILABLE THEN IT CAN BE MORE EASY
-  const addToFavs = (id: number, beer: any) => {
+  // THIS LINE OF CODE IS FOR THE STAR ICON'S CHECKED STATE, UNTIL YOU REMOVE IT, IT WON'T FADE UNLESS YOU'LL UNCHECK IT
+  useEffect(() => {
     const existingFavoritesJSON = localStorage.getItem('favoriteBeers');
     const existingFavorites = existingFavoritesJSON
       ? JSON.parse(existingFavoritesJSON)
       : [];
 
-    const isBeerInFavorites = existingFavorites.some(
-      (favBeer: any) => favBeer.id === id
+    const favoriteStatusArray = beers.map((beer: any) =>
+      existingFavorites.some((favBeer: any) => favBeer.id === beer.id)
     );
 
-    if (!isBeerInFavorites) {
-      const updatedFavorites = [...existingFavorites, { beer }];
+    setFavoriteStatus(favoriteStatusArray);
+  }, [beers]);
 
+  // HERE IS THE FUNCTION TO ADD THE BEERS IN FAVORIET SECTION, IF API METHODS WILL BE AVAILABLE THEN IT CAN BE MORE EASY
+  const addToFavs = (idx: number, beer: any) => {
+    const existingFavoritesJSON = localStorage.getItem('favoriteBeers');
+    const existingFavorites = existingFavoritesJSON
+      ? JSON.parse(existingFavoritesJSON)
+      : [];
+
+    const beerIndex = existingFavorites.findIndex(
+      (favBeer: any) => favBeer.id === beer.id
+    );
+
+    if (beerIndex !== -1) {
+      const updatedFavorites = existingFavorites.filter(
+        (favBeer: any) => favBeer.id !== beer.id
+      );
+      localStorage.setItem('favoriteBeers', JSON.stringify(updatedFavorites));
+    } else {
+      const updatedFavorites = [...existingFavorites, beer];
       localStorage.setItem('favoriteBeers', JSON.stringify(updatedFavorites));
     }
+
+    const updatedStatus: any = [...favoriteStatus];
+    updatedStatus[idx] = !updatedStatus[idx];
+    setFavoriteStatus(updatedStatus);
   };
 
   // UNTILL THE DATA IS BEING FETCHED
@@ -124,7 +151,11 @@ const Home = () => {
                         className='fav_icon'
                         onClick={() => addToFavs(idx, beer)}
                       >
-                        {icon === idx ? <AiTwotoneStar /> : <AiOutlineStar />}
+                        {favoriteStatus[idx] ? (
+                          <AiTwotoneStar />
+                        ) : (
+                          <AiOutlineStar />
+                        )}
                       </div>
                       <div className='img_container'>
                         <img src={beer.image_url} alt='' />
